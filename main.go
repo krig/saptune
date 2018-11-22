@@ -41,7 +41,7 @@ Tune system for all notes applicable to your SAP solution:
 
 // Print the message to stderr and exit 1.
 func errorExit(template string, stuff ...interface{}) {
-	fmt.Fprintf(os.Stderr, template+"\n", stuff...)
+	fmt.Fprintf(os.Stderr, "Error: " + template + "\n", stuff...)
 	os.Exit(1)
 }
 
@@ -58,12 +58,12 @@ var tuningOptions note.TuningOptions // Collection of tuning options from SAP no
 var solutionSelector = runtime.GOARCH
 
 func main() {
-	if arg1 := cliArg(1); arg1 == "" || arg1 == "help" || arg1 == "--help" {
+	if arg1 := cliArg(1); arg1 == "" || arg1 == "help" || arg1 == "--help" || arg1 == "-h" {
 		PrintHelpAndExit(0)
 	}
 	// All other actions require super user privilege
 	if os.Geteuid() != 0 {
-		errorExit("Please run saptune with root privilege.")
+		errorExit("Please run saptune with root privileges.")
 		return
 	}
 	var saptune_log io.Writer
