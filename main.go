@@ -58,9 +58,11 @@ var tuningOptions note.TuningOptions // Collection of tuning options from SAP no
 var solutionSelector = runtime.GOARCH
 
 func main() {
-	if arg1 := cliArg(1); arg1 == "" || arg1 == "help" || arg1 == "--help" || arg1 == "-h" {
+	switch cliArg(1) {
+	case "", "help", "--help", "-h":
 		PrintHelpAndExit(0)
 	}
+
 	// All other actions require super user privilege
 	if os.Geteuid() != 0 {
 		errorExit("Please run saptune with root privileges.")
